@@ -1,4 +1,4 @@
-package com.rbinder.hsas.tempservice.model;
+package com.rbinder.hsas.tempservice.environment.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

@@ -1,11 +1,12 @@
-package com.rbinder.hsas.tempservice.service;
+package com.rbinder.hsas.tempservice.environment.application.internal;
 
 import static com.rbinder.hsas.tempservice.Profiles.MOCK;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import com.rbinder.hsas.tempservice.model.Environment;
+import com.rbinder.hsas.tempservice.environment.application.EnvironmentService;
+import com.rbinder.hsas.tempservice.environment.domain.Environment;
 
 /**
  * Mock EnvironemtService.
@@ -15,7 +16,7 @@ import com.rbinder.hsas.tempservice.model.Environment;
  */
 @Profile(MOCK)
 @Service
-public class EnvironmentServiceMock implements EnvironmentService {
+class EnvironmentServiceMock implements EnvironmentService {
 
 	private static final int MIN_VALUE = -50;
 	private static final int MAX_VALUE = 150;

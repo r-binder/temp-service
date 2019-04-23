@@ -1,13 +1,14 @@
 /**
  *
  */
-package com.rbinder.hsas.tempservice.controller;
+package com.rbinder.hsas.tempservice.environment.infrastructure;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rbinder.hsas.tempservice.model.Environment;
-import com.rbinder.hsas.tempservice.service.EnvironmentService;
+import com.rbinder.hsas.tempservice.environment.application.EnvironmentService;
+import com.rbinder.hsas.tempservice.environment.application.EnvironmentServiceException;
+import com.rbinder.hsas.tempservice.environment.domain.Environment;
 
 /**
  * @author Robin
@@ -26,7 +27,7 @@ public class EnvironmentController {
 	}
 
 	@GetMapping(value = "/environments")
-	public Environment getEnvironment() {
+	public Environment getEnvironment() throws EnvironmentServiceException {
 		return environmentService.getEnvironment();
 	}
 }

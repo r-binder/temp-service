@@ -1,4 +1,4 @@
-package com.rbinder.hsas.tempservice.service;
+package com.rbinder.hsas.tempservice.environment.application.internal;
 
 import static com.rbinder.hsas.tempservice.Profiles.DEFAULT;
 
@@ -12,7 +12,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rbinder.hsas.tempservice.model.Environment;
+import com.rbinder.hsas.tempservice.environment.application.EnvironmentService;
+import com.rbinder.hsas.tempservice.environment.application.EnvironmentServiceException;
+import com.rbinder.hsas.tempservice.environment.domain.Environment;
 
 /**
  * Default implementation for {@link EnvironmentService}. Reads the current
@@ -23,7 +25,7 @@ import com.rbinder.hsas.tempservice.model.Environment;
  */
 @Profile(DEFAULT)
 @Service
-public class DefaultEnvironmentService implements EnvironmentService {
+class DefaultEnvironmentService implements EnvironmentService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEnvironmentService.class);
 
@@ -31,13 +33,14 @@ public class DefaultEnvironmentService implements EnvironmentService {
 	private String environemtJsonFile;
 
 	@Override
-	public Environment getEnvironment() {
+	public Environment getEnvironment() throws EnvironmentServiceException {
 		final ObjectMapper jsonMapper = new ObjectMapper();
 		try {
 			return jsonMapper.readValue(new File(environemtJsonFile), Environment.class);
 		} catch (final IOException e) {
-			LOGGER.error("Can't read json file {}", environemtJsonFile, e);
-			return null;
+			final String msg = "Can't read json file " + environemtJsonFile;
+			LOGGER.error(msg);
+			throw new EnvironmentServiceException(msg, e);
 		}
 	}
 
