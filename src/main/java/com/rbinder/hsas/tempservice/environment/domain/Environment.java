@@ -2,6 +2,7 @@ package com.rbinder.hsas.tempservice.environment.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.joda.time.DateTime;
 
 /**
  * Environment model.
@@ -13,6 +14,7 @@ public class Environment {
 	private double temperature;
 	private double pressure;
 	private double humidity;
+	private DateTime timestamp;
 
 	/**
 	 * Constructor
@@ -21,14 +23,29 @@ public class Environment {
 	}
 
 	/**
+	 * Constructor. Timestamp is set to current time.
+	 *
 	 * @param temperature
 	 * @param pressure
 	 * @param humidity
 	 */
 	public Environment(final double temperature, final double pressure, final double humidity) {
+		this(temperature, pressure, humidity, new DateTime());
+	}
+
+	/**
+	 * @param temperature
+	 * @param pressure
+	 * @param humidity
+	 * @param timestamp
+	 */
+	public Environment(final double temperature, final double pressure, final double humidity,
+			final DateTime timestamp) {
+		super();
 		this.temperature = temperature;
 		this.pressure = pressure;
 		this.humidity = humidity;
+		this.timestamp = timestamp;
 	}
 
 	/**
@@ -73,9 +90,24 @@ public class Environment {
 		this.humidity = humidity;
 	}
 
+	/**
+	 * @return the timestamp
+	 */
+	public DateTime getTimestamp() {
+		return timestamp;
+	}
+
+	/**
+	 * @param timestamp the timestamp to set
+	 */
+	public void setTimestamp(final DateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(temperature).append(pressure).append(humidity).toHashCode();
+		return new HashCodeBuilder(17, 37).append(temperature).append(pressure).append(humidity).append(timestamp)
+				.toHashCode();
 	}
 
 	@Override
@@ -91,12 +123,14 @@ public class Environment {
 		}
 		final Environment rhs = (Environment) obj;
 		return new EqualsBuilder().appendSuper(super.equals(obj)).append(temperature, rhs.temperature)
-				.append(pressure, rhs.pressure).append(humidity, rhs.humidity).isEquals();
+				.append(pressure, rhs.pressure).append(humidity, rhs.humidity).append(timestamp, rhs.timestamp)
+				.isEquals();
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Environment [temperature=%s, pressure=%s, humidity=%s]", temperature, pressure, humidity);
+		return String.format("Environment [temperature=%s, pressure=%s, humidity=%s, timestamp=%s]", temperature,
+				pressure, humidity, timestamp);
 	}
 
 }
