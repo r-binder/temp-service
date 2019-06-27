@@ -5,19 +5,24 @@
 </head>
 <body>
 
+<h1>ITS-Projekt SS19 - Sensorwerte:</h1>
+
+<p>
 <?php
-$txt1 = "Hallo Illya, Michael, Tim und Caro";
 
-echo "<h2>" . $txt1 . "</h2>";
+$rq = curl_init("http://temp-service:8080/environments");
+curl_setopt($rq, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($rq, CURLOPT_HEADER, 0);
+$rawData = curl_exec($rq);
+curl_close($rq);
 
-$ch = curl_init("http://temp-service:8080/environments");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-$data = curl_exec($ch);
-curl_close($ch);
+$data = json_decode($rawData);
 
-echo "<p>" . $data . "</p>";
+echo  "Temperatur: " . $data->{'temperature'} . " °C<br />";
+echo  "Druck: " . $data->{'pressure'} . " hPa<br />";
+echo  "Feuchtigkeit: " . $data->{'humidity'} . " %<br />";
 ?>
+</p>
 
 </body>
 </html>
